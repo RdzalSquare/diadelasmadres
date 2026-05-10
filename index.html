@@ -323,6 +323,51 @@
       height: 180px;
     }
 
+    .gallery-photo,
+    .mom-photo {
+      cursor: zoom-in;
+    }
+
+    .image-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(60, 20, 40, 0.82);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      animation: aparecer 0.25s ease both;
+    }
+
+    .image-modal.show {
+      display: flex;
+    }
+
+    .image-modal img {
+      max-width: 96vw;
+      max-height: 86vh;
+      object-fit: contain;
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+      background: white;
+      cursor: zoom-out;
+    }
+
+    .close-hint {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 9px 14px;
+      border-radius: 999px;
+    }
+
     .footer {
       text-align: center;
       padding: 20px 10px 30px;
@@ -466,6 +511,11 @@
       Feliz Día de las Madres<br>
       Hecho por su hijito Miguel Angel
     </div>
+  </div>
+
+  <div class="image-modal" id="imageModal" onclick="cerrarImagenGrande()">
+    <img id="imagenGrande" src="" alt="Imagen ampliada">
+    <div class="close-hint">Toca fuera de la imagen para cerrar</div>
   </div>
 
   <script>
@@ -654,7 +704,31 @@
       document.getElementById('mensajeCorazones').innerHTML = `¡Terminaste! 💐<br>Atrapaste ${corazonesAtrapados} corazones.<br><span class="english">Great job!</span>`;
     }
 
+    function prepararImagenesAmpliables() {
+      const imagenes = document.querySelectorAll('.gallery-photo, .mom-photo');
+      imagenes.forEach((img) => {
+        img.addEventListener('click', (evento) => {
+          evento.stopPropagation();
+          abrirImagenGrande(img.src, img.alt);
+        });
+      });
+    }
+
+    function abrirImagenGrande(src, alt) {
+      const modal = document.getElementById('imageModal');
+      const imagenGrande = document.getElementById('imagenGrande');
+      imagenGrande.src = src;
+      imagenGrande.alt = alt;
+      modal.classList.add('show');
+    }
+
+    function cerrarImagenGrande() {
+      const modal = document.getElementById('imageModal');
+      modal.classList.remove('show');
+    }
+
     iniciarJuego();
+    prepararImagenesAmpliables();
   </script>
 </body>
 </html>
