@@ -117,6 +117,11 @@
       transform: scale(0.98);
     }
 
+    .music-btn {
+      background: linear-gradient(135deg, #ffb6d2, #b83265);
+      margin-bottom: 4px;
+    }
+
     .section-title {
       font-size: 1.35rem;
       color: #b83265;
@@ -408,6 +413,12 @@
         Mamá, esta página es un pequeño detalle para recordarte lo mucho que te quiero.
         Gracias por tu amor, tu paciencia y por estar siempre conmigo.
       </p>
+
+      <audio id="musicaFondo" loop>
+        <source src="musica.mp3" type="audio/mpeg">
+      </audio>
+
+      <button class="btn music-btn" id="botonMusica" onclick="controlarMusica()">Reproducir música 🎵</button>
       <button class="btn" onclick="mostrarFrase()">Toca aquí para recibir amor</button>
       <div class="quote-box" id="frase">Presiona el botón de arriba para recibir un mensajito especial ✨</div>
 
@@ -519,6 +530,23 @@
   </div>
 
   <script>
+    let musicaSonando = false;
+
+    function controlarMusica() {
+      const musica = document.getElementById('musicaFondo');
+      const boton = document.getElementById('botonMusica');
+
+      if (!musicaSonando) {
+        musica.play();
+        musicaSonando = true;
+        boton.textContent = 'Pausar música ⏸️';
+      } else {
+        musica.pause();
+        musicaSonando = false;
+        boton.textContent = 'Reproducir música 🎵';
+      }
+    }
+
     const frases = [
       "Mamá, tu amor es el regalo más bonito que la vida me pudo dar 💖",
       "Gracias por tus cuidados, tus consejos y tus abrazos que siempre me hacen bien 🌷",
